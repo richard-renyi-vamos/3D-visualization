@@ -1,4 +1,4 @@
-
+CHAT GPT conversation
 
 User
 create a python app that shows the map of vienna in 3d
