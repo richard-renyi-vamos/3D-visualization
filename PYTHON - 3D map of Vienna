@@ -1,25 +1,25 @@
+import geopandas as gpd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-import random
 
-# Generate random points as a simple example
-num_points = 1000
-vienna_map_points = [(random.uniform(48.1, 48.3), random.uniform(16.3, 16.6), random.uniform(0, 200)) for _ in range(num_points)]
+# Load the shapefile for Vienna
+vienna = gpd.read_file('path_to_vienna_shapefile/Vienna.shp')
 
+# Extracting latitude, longitude, and altitude
+vienna['latitude'] = vienna.geometry.centroid.y
+vienna['longitude'] = vienna.geometry.centroid.x
+vienna['altitude'] = 0  # Assigning a default altitude for this example
+
+# Plotting the 3D map
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-# Extract coordinates for the plot
-x = [point[0] for point in vienna_map_points]
-y = [point[1] for point in vienna_map_points]
-z = [point[2] for point in vienna_map_points]
-
-# Plotting the 3D map
-ax.scatter(x, y, z, c=z, cmap='viridis', marker='o')
+# Plotting the map in 3D
+ax.scatter(vienna['latitude'], vienna['longitude'], vienna['altitude'], c='blue', marker='o')
 
 ax.set_xlabel('Latitude')
 ax.set_ylabel('Longitude')
 ax.set_zlabel('Altitude')
 
-plt.title('3D Map of Vienna (Simplified)')
+plt.title('3D Map of Vienna')
 plt.show()
